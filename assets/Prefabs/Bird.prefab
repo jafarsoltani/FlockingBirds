@@ -150,7 +150,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 5
-  neighborRadius: 3
+  neighborRadius: 1.5
   avoidanceRadius: 1.5
   maxSteerForce: 2
   alignmentWeight: 1.5

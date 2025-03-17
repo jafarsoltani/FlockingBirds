@@ -898,12 +898,12 @@ MonoBehaviour:
   spawnArea: {x: 10, y: 10, z: 10}
   birds: []
   globalSpeed: 2
-  globalAlignmentWeight: 1
+  globalAlignmentWeight: 0.5
   globalCohesionWeight: 1
-  globalSeparationWeight: 1
+  globalSeparationWeight: 2
   globalMaxSteerForce: 2
-  globalSmoothingFactor: 5
-  globalObstacleAvoidanceWeight: 1
+  globalSmoothingFactor: 2
+  globalObstacleAvoidanceWeight: 3
   globalObstacleDetectionRange: 5
   obstacleLayer:
     serializedVersion: 2

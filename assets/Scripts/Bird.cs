@@ -34,7 +34,16 @@ public class Bird : MonoBehaviour
         neighbours = GetNearbyBirds();
         var flockingForce = ComputeCollidingForce();
         var avoidanceForce = ComputeObstacleAvoidanceForce();
-        var finalForce = flockingForce + (avoidanceForce * obstacleAvoidanceWeight);
+        //var finalForce = flockingForce + (avoidanceForce * obstacleAvoidanceWeight);
+        Vector3 finalForce;
+        if(avoidanceForce != Vector3.zero)
+        {
+            finalForce = avoidanceForce * obstacleAvoidanceWeight;
+        }
+        else
+        {
+            finalForce = flockingForce;
+        }
 
         // Ensure final force is not zero
         if (finalForce == Vector3.zero)
@@ -54,7 +63,14 @@ public class Bird : MonoBehaviour
         // Use lerp to avoid sudden jumps
         velocity = Vector3.Lerp(velocity, velocity + flockingForce, Time.deltaTime * smoothingFactor);
         velocity = Vector3.ClampMagnitude(velocity, maxSteerForce);
+
+        // Ensure the velocity is zero, so the birds don't move along the y axis
+        velocity.y = 0;
+
         transform.position += velocity * Time.deltaTime;
+        // Ensure the position's y remains at 1
+        transform.position = new Vector3(transform.position.x, 1, transform.position.z);
+        
         transform.forward = velocity.normalized;
     }
 
@@ -115,6 +131,7 @@ public class Bird : MonoBehaviour
         Vector3 initialAvoidanceForce = Vector3.zero;
         
         RaycastHit hit;
+        Debug.Log($"{birdID} - transform position {transform.position} forward {transform.forward} Obstacle detection range: {obstacleDetectionRange} Obstacle Layer: {obstacleLayer.value}");
         if (Physics.Raycast(transform.position, transform.forward, out hit, obstacleDetectionRange, obstacleLayer))
         {
             initialAvoidanceForce = Vector3.Reflect(transform.forward, hit.normal);
@@ -122,6 +139,10 @@ public class Bird : MonoBehaviour
             float strength = 1.0f - (hit.distance / obstacleDetectionRange);
             avoidanceForce = initialAvoidanceForce * strength * obstacleAvoidanceWeight;
             Debug.Log($"{birdID} - Obstacle detected at distance {hit.distance}, initial force: {initialAvoidanceForce}, adjusted force: {avoidanceForce}");
+        }
+        else
+        {
+            Debug.Log($"{birdID} - No obstacle detected");
         }
 
         return avoidanceForce.normalized;
