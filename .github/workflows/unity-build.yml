@@ -11,12 +11,13 @@ on:
 jobs:
   build:
     name: Build Unity Project
-    runs-on: ${{ matrix.os }}
+    #runs-on: ${{ matrix.os }}
+    runs-on: macos-latest
 
-    strategy:
-      matrix:
-        os: [windows-latest, macos-latest]
-        targetPlatform: [StandaloneWindows64, StandaloneOSX]
+    #strategy:
+    #  matrix:
+    #    os: [windows-latest, macos-latest]
+    #    targetPlatform: [StandaloneWindows64, StandaloneOSX]
 
     steps:
       # 1️⃣ Checkout the repository
@@ -43,7 +44,7 @@ jobs:
       - name: Build for ${{ matrix.targetPlatform }}
         uses: game-ci/unity-builder@v4
         env:
-          #unityVersion: 6000.0.30f1
+          #unityVersion: 6000.0.42f1
           UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
           UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
           UNITY_SERIAL: ${{ secrets.UNITY_SERIAL }}
