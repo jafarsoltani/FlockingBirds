@@ -11,18 +11,24 @@ on:
 jobs:
   build:
     name: Build Unity Project
-    runs-on: ubuntu-latest
-    steps:
+    runs-on: ${{ matrix.os }}
 
+    strategy:
+      matrix:
+        os: [windows-latest, macos-latest]
+        targetPlatform: [StandaloneWindows64, StandaloneOSX]
+
+    steps:
       # 1️⃣ Checkout the repository
       - name: Checkout repository
         uses: actions/checkout@v4
 
       # 2️⃣ Install Unity (Replace version with your actual Unity version)
       - name: Set up Unity
-        uses: game-ci/unity-builder@v3
+        uses: game-ci/unity-builder@v2
         with:
           unityVersion: 6000.0.30f1
+          targetPlatform: ${{ matrix.targetPlatform }}
 
       # 3️⃣ Activate Unity License (required for CI/CD)
       - name: Activate Unity License
@@ -34,14 +40,14 @@ jobs:
           unitySerial: ${{ secrets.UNITY_SERIAL }}
 
       # 4️⃣ Build the Unity project
-      - name: Build for Windows
+      - name: Build for ${{ matrix.targetPlatform }}
         uses: game-ci/unity-builder@v3
         with:
-          targetPlatform: StandaloneWindows64
+          targetPlatform: ${{ matrix.targetPlatform }}
 
-      # 5️⃣ Upload the Build Artifacts
+      # 5️⃣ Upload Build Artifacts
       - name: Upload Build Artifacts
         uses: actions/upload-artifact@v3
         with:
-          name: UnityBuild-Windows
-          path: build/StandaloneWindows64
+          name: UnityBuild-${{ matrix.targetPlatform }}
+          path: build/${{ matrix.targetPlatform }}
