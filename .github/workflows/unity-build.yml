@@ -37,7 +37,7 @@ jobs:
           unityVersion: 6000.0.30f1
           unityEmail: ${{ secrets.UNITY_EMAIL }}
           unityPassword: ${{ secrets.UNITY_PASSWORD }}
-          unitySerial: ${{ secrets.UNITY_SERIAL }}
+          #unitySerial: ${{ secrets.UNITY_SERIAL }}
 
       # 4️⃣ Build the Unity project
       - name: Build for ${{ matrix.targetPlatform }}
