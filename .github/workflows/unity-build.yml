@@ -49,11 +49,14 @@ jobs:
           UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
           UNITY_SERIAL: ${{ secrets.UNITY_SERIAL }}
         with:
-          targetPlatform: ${{ matrix.targetPlatform }}
+          #targetPlatform: ${{ matrix.targetPlatform }}
+          targetPlatform: StandaloneOSX
 
       # 5️⃣ Upload Build Artifacts
       - name: Upload Build Artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: UnityBuild-${{ matrix.targetPlatform }}
-          path: build/${{ matrix.targetPlatform }}
+          #name: UnityBuild-${{ matrix.targetPlatform }}
+          #path: build/${{ matrix.targetPlatform }}
+          name: UnityBuild-StandaloneOSX
+          #path: build/StandaloneOSX
