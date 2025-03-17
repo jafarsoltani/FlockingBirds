@@ -14,6 +14,9 @@ public class FlockManager : MonoBehaviour
     public float globalSeparationWeight = 2.0f;
     public float globalMaxSteerForce = 2f;
     public float globalSmoothingFactor = 5f;
+    public float globalObstacleAvoidanceWeight = 3.0f;
+    public float globalObstacleDetectionRange = 5f;
+    public LayerMask obstacleLayer;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -47,5 +50,8 @@ public class FlockManager : MonoBehaviour
         bird.separationWeight = globalSeparationWeight;
         bird.maxSteerForce = globalMaxSteerForce;
         bird.smoothingFactor = globalSmoothingFactor;
+        bird.obstacleAvoidanceWeight = globalObstacleAvoidanceWeight;
+        bird.obstacleDetectionRange = globalObstacleDetectionRange;
+        bird.obstacleLayer = obstacleLayer;
     }
 }

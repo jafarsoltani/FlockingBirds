@@ -20,11 +20,13 @@ public class Bird : MonoBehaviour
     private Vector3 velocity;
     private List<Bird> neighbours;
     private Vector3 lastAvoidanceForce = Vector3.zero;
-
+    private int birdID;
 
     void Start()
     {
         velocity = transform.forward * speed;
+        birdID = GetInstanceID();
+        Debug.Log($"Velocity: {velocity}");
     }
 
     void Update()
@@ -34,6 +36,13 @@ public class Bird : MonoBehaviour
         var avoidanceForce = ComputeObstacleAvoidanceForce();
         var finalForce = flockingForce + (avoidanceForce * obstacleAvoidanceWeight);
 
+        // Ensure final force is not zero
+        if (finalForce == Vector3.zero)
+        {
+            finalForce = new Vector3(UnityEngine.Random.Range(-1f, 1f), 0, UnityEngine.Random.Range(-1f, 1f)).normalized * 0.1f;
+        }
+
+        Debug.Log($"{birdID} - flocking:{flockingForce} avoiding:{avoidanceForce} Final force:{finalForce}");
         Move(finalForce);
 
         lastAvoidanceForce = avoidanceForce;
@@ -74,7 +83,7 @@ public class Bird : MonoBehaviour
 
         if (count == 0)
         {
-            Console.WriteLine("No neighbours");
+            Debug.Log($"{birdID} - No neighbours");
             return Vector3.zero;
         }
 
@@ -103,14 +112,16 @@ public class Bird : MonoBehaviour
     private Vector3 ComputeObstacleAvoidanceForce()
     {
         Vector3 avoidanceForce = Vector3.zero;
+        Vector3 initialAvoidanceForce = Vector3.zero;
+        
         RaycastHit hit;
         if (Physics.Raycast(transform.position, transform.forward, out hit, obstacleDetectionRange, obstacleLayer))
         {
-            avoidanceForce = Vector3.Reflect(transform.forward, hit.normal);
-
+            initialAvoidanceForce = Vector3.Reflect(transform.forward, hit.normal);
             // Strengthen the avoidance based on distance (stronger when closer)
             float strength = 1.0f - (hit.distance / obstacleDetectionRange);
-            avoidanceForce *= strength * obstacleAvoidanceWeight;
+            avoidanceForce = initialAvoidanceForce * strength * obstacleAvoidanceWeight;
+            Debug.Log($"{birdID} - Obstacle detected at distance {hit.distance}, initial force: {initialAvoidanceForce}, adjusted force: {avoidanceForce}");
         }
 
         return avoidanceForce.normalized;
@@ -123,18 +134,21 @@ public class Bird : MonoBehaviour
 
         if (lastAvoidanceForce != Vector3.zero)
         {
-            Console.WriteLine("Drawing avoidance force");
             Gizmos.color = Color.blue;
             Gizmos.DrawRay(transform.position, lastAvoidanceForce * obstacleDetectionRange);
         }
+
+        // Draw birdID near the bird's position
+        Gizmos.color = Color.white;
+        UnityEditor.Handles.Label(transform.position + Vector3.up * 0.5f, $"ID: {birdID}");
     }    
 
     void OnCollisionEnter(Collision collision)
     {
-        Console.WriteLine("Collision detected");
+        Debug.Log("Collision detected");
         if (((1 << collision.gameObject.layer) & obstacleLayer) != 0) // Check if it's an obstacle
         {
-            Console.WriteLine("Obstacle collision detected");
+            Debug.Log("Collision with obstacle detected");
             // Push bird slightly away from obstacle
             transform.position += collision.contacts[0].normal * 0.5f;
 
@@ -142,6 +156,15 @@ public class Bird : MonoBehaviour
             velocity = -velocity;
         }
     }
+    void OnGUI()
+    {
+        Vector3 screenPosition = Camera.main.WorldToScreenPoint(transform.position);
+        if (screenPosition.z > 0) // Only display if the bird is in front of the camera
+        {
+            GUI.Label(new Rect(screenPosition.x, Screen.height - screenPosition.y, 100, 20), $"ID: {birdID}");
+        }
+    }
+    
 
 
 }

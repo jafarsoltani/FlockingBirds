@@ -131,7 +131,7 @@ GameObject:
   - component: {fileID: 72537641}
   - component: {fileID: 72537640}
   - component: {fileID: 72537639}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: RightWall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -239,7 +239,7 @@ GameObject:
   - component: {fileID: 302147543}
   - component: {fileID: 302147542}
   - component: {fileID: 302147541}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: LeftWall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -711,7 +711,7 @@ GameObject:
   - component: {fileID: 969271218}
   - component: {fileID: 969271217}
   - component: {fileID: 969271216}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: BottomWall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -894,15 +894,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   birdPrefab: {fileID: 6833629050099021841, guid: 96b36f959955b4a45869bc37642a8cee, type: 3}
-  flockSize: 40
+  flockSize: 20
   spawnArea: {x: 10, y: 10, z: 10}
   birds: []
-  globalSpeed: 3
-  globalAlignmentWeight: 3
-  globalCohesionWeight: 2
-  globalSeparationWeight: 1.5
+  globalSpeed: 2
+  globalAlignmentWeight: 1
+  globalCohesionWeight: 1
+  globalSeparationWeight: 1
   globalMaxSteerForce: 2
   globalSmoothingFactor: 5
+  globalObstacleAvoidanceWeight: 1
+  globalObstacleDetectionRange: 5
+  obstacleLayer:
+    serializedVersion: 2
+    m_Bits: 8
 --- !u!4 &1412984373
 Transform:
   m_ObjectHideFlags: 0
@@ -930,7 +935,7 @@ GameObject:
   - component: {fileID: 1482735882}
   - component: {fileID: 1482735881}
   - component: {fileID: 1482735880}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: TopWall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1035,7 +1040,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1665056540}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Walls
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1118,67 +1123,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b5a41c0f27c25402aaba866f92dee24f, type: 3}
---- !u!1001 &5117206630470821763
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 3646121733561761930, guid: 96b36f959955b4a45869bc37642a8cee, type: 3}
-      propertyPath: obstacleLayer.m_Bits
-      value: 8
-      objectReference: {fileID: 0}
-    - target: {fileID: 6833629050099021841, guid: 96b36f959955b4a45869bc37642a8cee, type: 3}
-      propertyPath: m_Name
-      value: Bird
-      objectReference: {fileID: 0}
-    - target: {fileID: 7055045009190841615, guid: 96b36f959955b4a45869bc37642a8cee, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7055045009190841615, guid: 96b36f959955b4a45869bc37642a8cee, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7055045009190841615, guid: 96b36f959955b4a45869bc37642a8cee, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7055045009190841615, guid: 96b36f959955b4a45869bc37642a8cee, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7055045009190841615, guid: 96b36f959955b4a45869bc37642a8cee, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7055045009190841615, guid: 96b36f959955b4a45869bc37642a8cee, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7055045009190841615, guid: 96b36f959955b4a45869bc37642a8cee, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7055045009190841615, guid: 96b36f959955b4a45869bc37642a8cee, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7055045009190841615, guid: 96b36f959955b4a45869bc37642a8cee, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7055045009190841615, guid: 96b36f959955b4a45869bc37642a8cee, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 96b36f959955b4a45869bc37642a8cee, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
@@ -1187,7 +1131,6 @@ SceneRoots:
   - {fileID: 330585546}
   - {fileID: 410087041}
   - {fileID: 832575519}
-  - {fileID: 5117206630470821763}
   - {fileID: 1412984373}
   - {fileID: 1665056540}
   - {fileID: 1010567757}
