@@ -23,14 +23,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      # 2️⃣ Install Unity (Replace version with your actual Unity version)
-      - name: Set up Unity
-        uses: game-ci/unity-builder@v4
-        with:
-          unityVersion: 6000.0.30f1
-          targetPlatform: ${{ matrix.targetPlatform }}
-
-      # 3️⃣ Activate Unity License (required for CI/CD)
+      # 2️⃣ Activate Unity License (required for CI/CD)
       - name: Activate Unity License
         uses: game-ci/unity-builder@v4
         with:
@@ -38,6 +31,13 @@ jobs:
           unityEmail: ${{ secrets.UNITY_EMAIL }}
           unityPassword: ${{ secrets.UNITY_PASSWORD }}
           unitySerial: ${{ secrets.UNITY_SERIAL }}
+
+      # 3️⃣ Install Unity (Replace version with your actual Unity version)
+      - name: Set up Unity
+        uses: game-ci/unity-builder@v4
+        with:
+          unityVersion: 6000.0.30f1
+          targetPlatform: ${{ matrix.targetPlatform }}
 
       # 4️⃣ Build the Unity project
       - name: Build for ${{ matrix.targetPlatform }}
