@@ -24,6 +24,14 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      - name: Activate Unity License
+        run: |
+          unity-editor -quit -batchmode -nographics \
+            -serial "$UNITY_SERIAL" \
+            -username "$UNITY_EMAIL" \
+            -password "$UNITY_PASSWORD" \
+            -logfile /dev/stdout
+
       # 2️⃣ Activate Unity License (required for CI/CD)
       #- name: Activate Unity License
       #  uses: game-ci/unity-builder@v4
@@ -60,3 +68,10 @@ jobs:
           #path: build/${{ matrix.targetPlatform }}
           name: UnityBuild-StandaloneOSX
           #path: build/StandaloneOSX
+
+      - name: Return Unity License
+        if: always()  # This ensures it runs even if previous steps fail
+        run: |
+          unity-editor -quit -batchmode -nographics \
+            -returnlicense \
+            -logfile /dev/stdou
