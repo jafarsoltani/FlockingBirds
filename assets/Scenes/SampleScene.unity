@@ -899,7 +899,7 @@ MonoBehaviour:
   birds: []
   globalSpeed: 2
   globalAlignmentWeight: 0.5
-  globalCohesionWeight: 1
+  globalCohesionWeight: 3
   globalSeparationWeight: 2
   globalMaxSteerForce: 2
   globalSmoothingFactor: 2
