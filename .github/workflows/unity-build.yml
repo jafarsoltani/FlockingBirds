@@ -12,7 +12,7 @@ jobs:
   build:
     name: Build Unity Project
     #runs-on: ${{ matrix.os }}
-    runs-on: macos-latest
+    runs-on: ubuntu-latest
 
     #strategy:
     #  matrix:
@@ -23,6 +23,13 @@ jobs:
       # 1️⃣ Checkout the repository
       - name: Checkout repository
         uses: actions/checkout@v4
+
+      - name: Activate Unity License
+        uses: game-ci/unity-activate@v2
+        env:
+          UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
+          UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
+          UNITY_SERIAL: ${{ secrets.UNITY_SERIAL }}
 
       # 2️⃣ Activate Unity License (required for CI/CD)
       #- name: Activate Unity License
@@ -60,3 +67,7 @@ jobs:
           #path: build/${{ matrix.targetPlatform }}
           name: UnityBuild-StandaloneOSX
           #path: build/StandaloneOSX
+
+      - name: Return License
+        if: always()
+        uses: game-ci/unity-return-license@v2      
